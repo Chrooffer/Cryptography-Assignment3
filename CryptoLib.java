@@ -13,19 +13,55 @@ public class CryptoLib {
 	public static int[] EEA(int a, int b) {
 		// Note: as you can see in the test suite,
 		// your function should work for any (positive) value of a and b.
+
 		int gcd = -1;
-		int s = -1;
-		int t = -1;
+		int[] s = new int[3];
+		int[] t = new int[3];
 		int[] result = new int[3];
+		int[] reminder = new int[3];
+		int quotient = -1;
+
+		if (a < 1 || b < 1){
+			system.println("Bad Values (below 0)")
+			return result;
+		}
+
+		reminder[0] = a;
+		reminder[1] = b;
+		s[0] = 1;
+		s[1] = 0;
+		t[0] = 0;
+		t[1] = 1;
+
+		boolean success = false;
+		while (!success) {
+			quotient = (int)(reminder[0] / reminder[1]);
+			reminder[2] =  reminder[0] % reminder[1];
+			s[2] = s[0] - s[1]*quotient;
+			t[2] = t[0] - t[1]*quotient;
+
+			reminder[0] = reminder[1];
+			reminder[1] = reminder[2];
+			s[0] = s[1];
+			s[1] = s[2];
+			t[0] = t[1];
+			t[1] = t[2];
+
+			if(reminder[1] == 0) {
+				success = true;
+				gcd = quotient;
+			}
+		}
+
 		result[0] = gcd;
-		result[1] = s;
-		result[2] = t;
+		result[1] = s[1];
+		result[2] = t[1];
 		return result;
-
-
 	}
 
-	/**
+
+
+	/*
 	 * Returns Euler's Totient for value "n".
 	 **/
 	public static int EulerPhi(int n) {
