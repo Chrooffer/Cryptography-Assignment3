@@ -22,7 +22,7 @@ public class CryptoLib {
 		int quotient = -1;
 
 		if (a < 1 || b < 1){
-			system.println("Bad Values (below 0)")
+			System.out.println("Bad Values (below 0)");
 			return result;
 		}
 
@@ -33,13 +33,25 @@ public class CryptoLib {
 		t[0] = 0;
 		t[1] = 1;
 
+		System.out.println("INITIAL");
+		System.out.println("q = " + quotient);
+		System.out.println("r0="+reminder[0]+"\t r1="+reminder[1]+"\t r2="+reminder[2]);
+		System.out.println("s0="+s[0]+"\t s1="+s[1]+"\t s2="+s[2]);
+		System.out.println("t0="+t[0]+"\t t1="+t[1]+"\t t2="+t[2]);
+
 		boolean success = false;
 		while (!success) {
+			//Calculate values of new row
 			quotient = (int)(reminder[0] / reminder[1]);
+			//System.out.println("q="+quotient);
 			reminder[2] =  reminder[0] % reminder[1];
+			//System.out.println("r2="+reminder[2]);
 			s[2] = s[0] - s[1]*quotient;
+			//System.out.println("s2="+s[2]);
 			t[2] = t[0] - t[1]*quotient;
+			//System.out.println("t2="+t[2]);
 
+			//Pushing up one row
 			reminder[0] = reminder[1];
 			reminder[1] = reminder[2];
 			s[0] = s[1];
@@ -47,19 +59,23 @@ public class CryptoLib {
 			t[0] = t[1];
 			t[1] = t[2];
 
+			System.out.println("q = " + quotient);
+			System.out.println("r0="+reminder[0]+"\t r1="+reminder[1]+"\t r2="+reminder[2]);
+			System.out.println("s0="+s[0]+"\t s1="+s[1]+"\t s2="+s[2]);
+			System.out.println("t0="+t[0]+"\t t1="+t[1]+"\t t2="+t[2]);
+
 			if(reminder[1] == 0) {
 				success = true;
-				gcd = quotient;
+				gcd = reminder[0];
+				System.out.println("Success - gcd: "+gcd);
 			}
 		}
 
 		result[0] = gcd;
-		result[1] = s[1];
-		result[2] = t[1];
+		result[1] = s[0];
+		result[2] = t[0];
 		return result;
 	}
-
-
 
 	/*
 	 * Returns Euler's Totient for value "n".

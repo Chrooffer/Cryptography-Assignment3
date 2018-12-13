@@ -18,6 +18,7 @@ public class CryptoLibTest {
 
 	static void TestEEA() {
 		int errors = 0;
+		//errors += TestEEA(240, 46, 2, 23, -120);
 		errors += TestEEA(5, 5, 5, 1, 0);
 		errors += TestEEA(18, 1, 1, 0, 1);
 		errors += TestEEA(1, 18, 1, 1, 0);
