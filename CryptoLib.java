@@ -57,7 +57,15 @@ public class CryptoLib {
 	}
 
 }
-/*
+/*A Math Library for Cryptography (5 points)
+In this assignment you will implement a library that provides a number of mathematical functions commonly used in cryptography, such as Euler's Phi Function (Totient), the Extended Euclidean Algorithm and some Primality Test. Your library needs to successfully pass a test suite that we provide.
+
+Less
+
+In this assignment you are required to follow the skeleton code we provide, to make sure that the test suite works. All functions should work for arbitrary integers. You are not allowed to call already implemented libraries (BigInteger, GMP, ...). Make sure your implementation passes our tests before submitting.
+
+The following archives contain a skeleton code and test suite for each programming language: cryptolib_cpp.zip, cryptolib_java.zip and cryptolib_haskell.zip.
+
 You should implement the following functions (plus any helper code you deem necessary):
 
 Extended Euclidean Algorithm
