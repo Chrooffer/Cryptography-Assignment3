@@ -117,8 +117,8 @@ public class CryptoLibTest {
 	 */
 	public static void main(String[] args) {
 		//TestEEA();
-		TestEulerPhi();
-		//TestModInv();
+		//TestEulerPhi();
+		TestModInv();
 		//TestFermatPT();
 		//TestHashCP();
 

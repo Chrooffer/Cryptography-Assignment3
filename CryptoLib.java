@@ -132,11 +132,37 @@ public class CryptoLib {
 	}
 
 	/**
-	 * Returns the value "v" such that "n*v = 1 (mod m)". Returns 0 if the
-	 * modular inverse does not exist.
+	 * Returns the value "v" such that "n*v = 1 (mod m)".
+	 * Returns 0 if the modular inverse does not exist.
 	 **/
 	public static int ModInv(int n, int m) {
-		return -1;
+
+		int counter = 1;
+		boolean success = false;
+
+		// dealing with negative n --> find equivalent case with positive n
+		while (n<0) {
+			n = n+m;
+		}
+		// special case n=0 (would be covered in the algorithm but here it's a shortcut)
+		if (n == 0) {
+			return 0;
+		}
+
+		while (!success) {
+			if ((counter*n)%m == 1) {
+				success = true;
+			}
+			else {
+				counter++;
+			}
+		}
+		if (success) {
+			return counter;
+		}
+		else {
+			return 0;
+		}
 	}
 
 	/**
