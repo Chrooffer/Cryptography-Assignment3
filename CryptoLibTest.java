@@ -116,11 +116,11 @@ public class CryptoLibTest {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		//TestEEA();
-		//TestEulerPhi();
-		//TestModInv();
+		TestEEA();
+		TestEulerPhi();
+		TestModInv();
 		TestFermatPT();
-		//TestHashCP();
+		TestHashCP();
 
 	}
 

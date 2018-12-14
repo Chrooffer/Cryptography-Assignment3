@@ -198,7 +198,25 @@ public class CryptoLib {
 	 * different output values the hash function can produce.
 	 **/
 	public static double HashCP(double n_samples, double size) {
-		return -1;
+
+		double probCollision = 1;
+		double probNoCollision = 1;
+
+		//edge case if n_samples greater than size a collision can't be avoided
+		if (n_samples > size) {
+			return 0;
+		}
+
+		//calculate probability of no collision
+		for (int i = 0; i<n_samples; i++) {
+			double singleProb = (size - i)/size;
+			probNoCollision = probNoCollision * singleProb;
+		}
+
+		//probabulity of collision is 1 - probability of no collision
+		probCollision = 1-probNoCollision;
+
+		return probCollision;
 	}
 
 }
