@@ -35,11 +35,11 @@ public class CryptoLib {
 		t[0] = 0;
 		t[1] = 1;
 
-		System.out.println("INITIAL");
+		/*System.out.println("INITIAL");
 		System.out.println("q = " + quotient);
 		System.out.println("r0="+reminder[0]+"\t r1="+reminder[1]+"\t r2="+reminder[2]);
 		System.out.println("s0="+s[0]+"\t s1="+s[1]+"\t s2="+s[2]);
-		System.out.println("t0="+t[0]+"\t t1="+t[1]+"\t t2="+t[2]);
+		System.out.println("t0="+t[0]+"\t t1="+t[1]+"\t t2="+t[2]);*/
 
 		boolean success = false;
 		while (!success) {
@@ -61,15 +61,15 @@ public class CryptoLib {
 			t[0] = t[1];
 			t[1] = t[2];
 
-			System.out.println("q = " + quotient);
+			/*System.out.println("q = " + quotient);
 			System.out.println("r0="+reminder[0]+"\t r1="+reminder[1]+"\t r2="+reminder[2]);
 			System.out.println("s0="+s[0]+"\t s1="+s[1]+"\t s2="+s[2]);
-			System.out.println("t0="+t[0]+"\t t1="+t[1]+"\t t2="+t[2]);
+			System.out.println("t0="+t[0]+"\t t1="+t[1]+"\t t2="+t[2]);*/
 
 			if(reminder[1] == 0) {
 				success = true;
 				gcd = reminder[0];
-				System.out.println("Success - gcd: "+gcd);
+				//System.out.println("Success - gcd: "+gcd);
 			}
 		}
 
@@ -149,7 +149,7 @@ public class CryptoLib {
 			return 0;
 		}
 
-		while (!success) {
+		while (!success && counter<m) {
 			if ((counter*n)%m == 1) {
 				success = true;
 			}
@@ -170,7 +170,25 @@ public class CryptoLib {
 	 * Fermat Witness. Tests values from 2 (inclusive) to "n/3" (exclusive).
 	 **/
 	public static int FermatPT(int n) {
-		return -1;
+
+		int upperLimit = n/3;
+		for (int a = 2; a<=upperLimit; a++) {
+			int x = 0;
+			for (int i = 1; i<n; i++) {
+				if (i == 1) {
+					x = a % n;
+				}
+				else {
+					x = (x*a) % n;
+				}
+			}
+
+			if(x != 1) {
+					return a;
+
+			}
+		}
+		return 0;
 	}
 
 	/**
