@@ -34,6 +34,9 @@ public class CBCXor {
 	 *            block is 12 bytes long.
 	 */
 	private static String recoverMessage(byte[] first_block, byte[] encrypted) {
+		//In this case the encryption function is simply a XOR (+) operation with the key, i.e. Ci = K + (Mi + Ci-1), where C0 = IV.
+
+
 		return new String(encrypted);
 	}
 }
