@@ -44,7 +44,7 @@ public class CryptoLib {
 		boolean success = false;
 		while (!success) {
 			//Calculate values of new row
-			quotient = (int)(reminder[0] / reminder[1]);
+			quotient = (reminder[0] / reminder[1]);
 			//System.out.println("q="+quotient);
 			reminder[2] =  reminder[0] % reminder[1];
 			//System.out.println("r2="+reminder[2]);
