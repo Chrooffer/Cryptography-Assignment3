@@ -66,13 +66,24 @@ public class AttackRSA {
 		BigInteger[] bid = new BigInteger[3];
 		BigInteger[] biephi = new BigInteger[3];
 
-
+		// Implement https://en.wikipedia.org/wiki/Coppersmith%27s_attack
+		//					 https://en.wikipedia.org/wiki/Chinese_remainder_theorem
     for (int i = 0; i<3; i++){
       System.out.println("N[" + i + "]: " + N[i]);
       System.out.println("e[" + i + "]: " + e[i]);
       System.out.println("c[" + i + "]: " + c[i]);
 
  			// Pseudo code: biephi[i] = Euler.Phi(N[0]);
+			/* Some other good links:
+			https://www.nayuki.io/page/java-biginteger-was-made-for-rsa-cryptography
+			https://crypto.stackexchange.com/questions/2323/how-does-a-chosen-plaintext-attack-on-rsa-work
+			https://docs.oracle.com/javase/8/docs/api/java/math/BigInteger.html#modPow-java.math.BigInteger-java.math.BigInteger-
+			http://www.cse.chalmers.se/edu/course/TDA352/pdf/lect/lect05.pdf
+			http://www.cse.chalmers.se/edu/course/TDA352/pdf/lect/lect06.pdf
+			http://www.cse.chalmers.se/edu/course/TDA352/pdf/lect/lect07.pdf
+
+
+			*/
 			System.out.println("ModInverse of N[i]: " + biephi[i]);
 
 			bid[i] = e[i].modInverse(biephi[i]);
