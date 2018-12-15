@@ -63,7 +63,6 @@ public class AttackRSA {
 
 		//String d = CryptoLib.ModInv(e, eulerPhi);
 
-		BigInteger[] bic = new BigInteger[3];
 		BigInteger[] bid = new BigInteger[3];
 		BigInteger[] biephi = new BigInteger[3];
 
@@ -72,11 +71,15 @@ public class AttackRSA {
       System.out.println("N[" + i + "]: " + N[i]);
       System.out.println("e[" + i + "]: " + e[i]);
       System.out.println("c[" + i + "]: " + c[i]);
-			
-			biephi[i] = e[i].modInverse(N[i]);
-			System.out.println("ModInverse of N[i]: " + biephi[i]);
 
+ 			// Pseudo code: biephi[i] = Euler.Phi(N[0]);
+
+			bid[i] = e[i].modInverse(biephi[i]);
+			System.out.println("ModInverse of N[i]: " + bid[i]);
 			System.out.println();
+
+
+
     }
 
 
