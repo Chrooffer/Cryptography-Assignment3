@@ -5,41 +5,6 @@ import javax.xml.bind.DatatypeConverter;
 import java.util.Arrays;
 
 
-/*
-import java.util.ArrayList;
-import java.activation;
-import java.corba;
-import java.transaction;
-import javax.xml.bind;  //<< This one contains the JAXB APIs
-import javax.xml.ws;
-import javax.xml.ws.annotation;
-*/
-
-/*
-<dependencies>
-    <dependency>
-        <groupId>javax.xml.bind</groupId>
-        <artifactId>jaxb-api</artifactId>
-        <version>2.3.0</version>
-    </dependency>
-    <dependency>
-        <groupId>com.sun.xml.bind</groupId>
-        <artifactId>jaxb-impl</artifactId>
-        <version>2.3.0</version>
-    </dependency>
-    <dependency>
-        <groupId>org.glassfish.jaxb</groupId>
-        <artifactId>jaxb-runtime</artifactId>
-        <version>2.3.0</version>
-    </dependency>
-    <dependency>
-        <groupId>javax.activation</groupId>
-        <artifactId>activation</artifactId>
-        <version>1.1.1</version>
-    </dependency>
-</dependencies>
-*/
-
 //String text1 = "199311300478";
 //String text2 = "62C9C46C1E22C27C48C0BE76EDF611DC83414A0AD56EC1111F999A375B338524119AE23D81F6029483135F14D96CD94259919D634A33C4261C97FF3D86F908948E081107916FC216189690374B298A364E9AE42E88B032DBC71650049765DE515ED9A9780D2598361A93FF6988AB658FD3165515DB7A9B165FD9A96A162A8A205694BB2CC1BB249BD1165415882E9B120C9DA9740A25962005D3BC3992EF2D92D4120D00C13B871200C9A07F1C60DF354CD6AE24CAA6229B90540B01C1259255548DEE4C5974C23E4CEFA86B9EE86AAA81524948D145D004";
 
@@ -76,41 +41,57 @@ public class CBCXor {
 	 */
 	private static String recoverMessage(byte[] first_block, byte[] encrypted) {
 		//In this case the encryption function is simply a XOR (+) operation with the key, i.e. Ci = K + (Mi + Ci-1), where C0 = IV.
-		byte[] ci = first_block;
-		byte[] cj = new byte[12];
-		byte[] encryptedRange = new byte[12];
-		StringBuilder message = new StringBuilder("");
-		int bitCi;
-		int bitEI;
-		int xor;
 
-		System.out.println(first_block);
-		System.out.println(encrypted);
 
-		int startByte = 0;
-		int endByte = 11;
-		int maxcounter = encrypted.length / 12 ;
-		for(int i = 0; i < maxcounter; i++){
-			encryptedRange = Arrays.copyOfRange(encrypted, startByte, endByte);
+		byte[] k = new byte[12];
+		byte[] IV = Arrays.copyOfRange(encrypted, 0, 12);
+		byte[] c1 = Arrays.copyOfRange(encrypted, 12, 24);
+		byte[] m1 = first_block;
 
-			//Comparing individual bytes by casting to int to compare, then recasting back to byte
-			for(int j = 0; j < 12; j++){
-				bitCi = (int)ci[j];
-				bitEI = (int)encryptedRange[j];
-				xor = bitCi ^ bitEI;
-				cj[j] = (byte)(0xff & xor);
-			}
+		/*
+		System.out.println("k_empty = " + byteToNumberString(k));
+		System.out.println("c0 = IV = " + byteToNumberString(IV));
+		System.out.println("m1 = " + byteToNumberString(m1));
 
-			message.append(cj);
+		System.out.println("### calculate key k ###"); */
+		for (int i = 0; i<12; i++) {
+			k[i] = (byte) (m1[i]^IV[i]^c1[i]);
+		}
+		//System.out.println("k_calculated = " + byteToNumberString(k));
 
-			ci = encryptedRange;
 
-			startByte = startByte + 12;
-			endByte = endByte + 12;
+		byte[] decrypted = new byte[encrypted.length];
+		for (int i = 0; i<12; i++) {
+			decrypted[i] = encrypted[i];
 		}
 
-		return new String(message);
+		int maxBlock = encrypted.length / 12;
+		int index;
+		for (int i = 1; i<maxBlock; i++) {
+			for (int j = 0; j<12; j++) {
+				index = i*12 + j;
+				decrypted[12*i + j] = (byte) (encrypted[index-12]^encrypted[index]^k[j]);
+			}
+		}
+
+		// cut IV from decrypted array and convert into String
+		byte[] mInBytes = Arrays.copyOfRange(decrypted, 12, decrypted.length);
+		String m = new String(mInBytes);
+
+		return m;
 	}
+
+	public static String byteToNumberString(byte[] bytes) {
+		String result = "";
+		for (int i = 0; i<bytes.length; i++) {
+			result = result + bytes[i];
+			if(i!= bytes.length-1) {
+				result += ", ";
+			}
+		}
+		return result;
+	}
+
 }
 
 
