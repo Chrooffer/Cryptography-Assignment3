@@ -132,6 +132,19 @@ Your goal is to retrieve m.
 
 You can try starting from here, but we provide additional hints if you want some help. Give a hint
 
+1. We know that each cipher text is computed as m3. Why does it not make sense to directly compute the cube root on one the cipher texts (c)?
+
+2. Computing the cube root with some modulus N is equivalent to solving the discrete
+log problem for exponent e=3, which we know to be hard.
+What about trying to move to a bigger modulus so that no modular reduction occurs when you encrypt the message?
+
+3. N1N2N3 is a large enough modulus, since in RSA encryption the message must be an element in ZNi.
+That is, you can see this is as m < Ni for i=1,2,3 and therefore m3 < N1N2N3.
+
+4. In order to find m3 the large modulus you can use the Chinese Remainder Theorem.
+
+5. This is your last hint. https://en.wikipedia.org/wiki/Chinese_remainder_theorem
+
 
 N=541943169829234727477122697102275720972053146173972333934461,e=3,c=398924993181138906590584190725292968825560162810793723052587
 N=1235559568656185372229671459847644219326103310686849347266229,e=3,c=492210655361863905807061259315457553414294037367103445414124
