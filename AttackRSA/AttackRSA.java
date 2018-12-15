@@ -67,7 +67,6 @@ public class AttackRSA {
 		BigInteger[] biephi = new BigInteger[3];
 
 		// Implement https://en.wikipedia.org/wiki/Coppersmith%27s_attack
-		//					 https://en.wikipedia.org/wiki/Chinese_remainder_theorem
     for (int i = 0; i<3; i++){
       System.out.println("N[" + i + "]: " + N[i]);
       System.out.println("e[" + i + "]: " + e[i]);
