@@ -64,6 +64,7 @@ public class AttackRSA {
       System.out.println(N[i]);
       System.out.println(e[i]);
       System.out.println(c[i]);
+			System.out.println();
     }
 
 
