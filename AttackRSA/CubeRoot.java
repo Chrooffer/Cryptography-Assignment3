@@ -113,27 +113,3 @@ public class CubeRoot {
 	}
 
 }
-
-
-/*
-Attacking RSA (10 points)
-This attack applies to the case in which the same message is
-encrypted using RSA to three different recipients.
-The enablers of the attack are (1) all recipients have
-the same public key (e = 3) and (2) the recipients have
-different modulus (N1, N2, N3) that are coprime. Your goal
-in this assignment is to use the three eavesdropped ciphertexts
-and recover the secret message! The message you will recover
-is an ASCII encoding of a name you should know ;)
-
-The text field below displays the modulus (N), the public key
-(e) and the cipher text (c) of three recipients of the same message (m).
-Your goal is to retrieve m.
-
-You can try starting from here, but we provide additional hints if you want some help. Give a hint
-
-
-N=541943169829234727477122697102275720972053146173972333934461,e=3,c=398924993181138906590584190725292968825560162810793723052587
-N=1235559568656185372229671459847644219326103310686849347266229,e=3,c=492210655361863905807061259315457553414294037367103445414124
-N=1189363168839866028644614938349842324542055957124930112530987,e=3,c=732007191931262531495434848531299493575938917093773948145721
-*/
