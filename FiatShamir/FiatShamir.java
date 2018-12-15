@@ -2,6 +2,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.math.BigInteger;
 
+package FiatShamir;
+
 public class FiatShamir {
 
 	public static class ProtocolRun {
@@ -62,6 +64,23 @@ public class FiatShamir {
 	private static BigInteger recoverSecret(BigInteger N, BigInteger X,
 			ProtocolRun[] runs) {
 		// TODO. Recover the secret value x such that x^2 = X (mod N).
+
+
+		// find runs with same R
+		int runIndex1 = 0;
+		int runIndex2 = 1;
+		while (runIndex1 < runs.length-1 && runs[runIndex1].R != runs[runIndex2].R) {
+			System.out.println("rI1="+runIndex1+", rI2="+runIndex2);
+			if(runIndex2<runs.length-1) {
+				runIndex2++;
+			}
+			else {
+				runIndex1++;
+				runIndex2 = runIndex1+1;
+			}
+
+
+		}
 		return BigInteger.ZERO;
 	}
 }
