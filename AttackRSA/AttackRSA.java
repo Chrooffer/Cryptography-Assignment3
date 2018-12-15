@@ -79,7 +79,10 @@ public class AttackRSA {
 			System.out.println("d[i]: " + bid[i]);
 			System.out.println();
 
+			/*BigInteger tempo = new BigInteger("9");
 
+			bid[i] = N[0].divide(tempo);
+			System.out.println("d[i]: " + bid[i]);*/
 
     }
 
