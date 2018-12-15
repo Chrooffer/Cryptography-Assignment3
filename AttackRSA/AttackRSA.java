@@ -66,7 +66,7 @@ public class AttackRSA {
 		BigInteger[] bid = new BigInteger[3];
 		BigInteger[] biephi = new BigInteger[3];
 
-
+		// Implement https://en.wikipedia.org/wiki/Coppersmith%27s_attack
     for (int i = 0; i<3; i++){
       System.out.println("N[" + i + "]: " + N[i]);
       System.out.println("e[" + i + "]: " + e[i]);
