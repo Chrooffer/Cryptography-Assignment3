@@ -57,13 +57,25 @@ public class AttackRSA {
     N=1189363168839866028644614938349842324542055957124930112530987,e=3,c=732007191931262531495434848531299493575938917093773948145721
     */
 		//d = e^-1 mod phi(N)
+		//BigInteger eulerPhi = CryptoLib.EulerPhi(N[0]);
 
+		//BigInteger bie = BigInteger.valueOf(myInteger.intValue());
+
+		//String d = CryptoLib.ModInv(e, eulerPhi);
+
+		BigInteger[] bic = new BigInteger[3];
+		BigInteger[] bid = new BigInteger[3];
+		BigInteger[] biephi = new BigInteger[3];
 
 
     for (int i = 0; i<3; i++){
-      System.out.println(N[i]);
-      System.out.println(e[i]);
-      System.out.println(c[i]);
+      System.out.println("N[" + i + "]: " + N[i]);
+      System.out.println("e[" + i + "]: " + e[i]);
+      System.out.println("c[" + i + "]: " + c[i]);
+			
+			biephi[i] = e[i].modInverse(N[i]);
+			System.out.println("ModInverse of N[i]: " + biephi[i]);
+
 			System.out.println();
     }
 
