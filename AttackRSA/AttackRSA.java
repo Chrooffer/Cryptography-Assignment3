@@ -73,9 +73,10 @@ public class AttackRSA {
       System.out.println("c[" + i + "]: " + c[i]);
 
  			// Pseudo code: biephi[i] = Euler.Phi(N[0]);
+			System.out.println("ModInverse of N[i]: " + biephi[i]);
 
 			bid[i] = e[i].modInverse(biephi[i]);
-			System.out.println("ModInverse of N[i]: " + bid[i]);
+			System.out.println("d[i]: " + bid[i]);
 			System.out.println();
 
 
