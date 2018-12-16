@@ -183,9 +183,9 @@ public class AttackRSA {
 				BigInteger m = CubeRoot.cbrt(C);
 
 				return m;
-			}
-
 	}
+
+	
 
   /*
   Attacking RSA (10 points)
