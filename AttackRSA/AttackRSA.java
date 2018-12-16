@@ -63,7 +63,7 @@ public class AttackRSA {
 
 		//String d = CryptoLib.ModInv(e, eulerPhi);
 
-		BigInteger[] bid = new BigInteger[3];
+		/*BigInteger[] bid = new BigInteger[3];
 		BigInteger bi0, bi1, bi2;
 		BigInteger bir0, bir1, bir2;
 		BigInteger[] biephi = new BigInteger[3];
@@ -79,7 +79,7 @@ public class AttackRSA {
 		http://www.cse.chalmers.se/edu/course/TDA352/pdf/lect/lect06.pdf
 		http://www.cse.chalmers.se/edu/course/TDA352/pdf/lect/lect07.pdf
 		*/
-    for (int i = 0; i<3; i++){
+    /*for (int i = 0; i<3; i++){
       System.out.println("N[" + i + "]: " + N[i]);
       System.out.println("e[" + i + "]: " + e[i]);
       System.out.println("c[" + i + "]: " + c[i]);
@@ -123,7 +123,68 @@ public class AttackRSA {
 
 
 
-		return bid[0];
+		//return bid[0];
+
+
+		// find c such that c = c1 mod N1 = c2 mod N2 = c3 mod N3
+				// find largest Ni
+
+
+				/* Smaller Values to test implementation of chinese theorem
+				N[0] = BigInteger.valueOf(10);
+				N[1] = BigInteger.valueOf(3);
+				N[2] = BigInteger.valueOf(7);
+
+				c[0] = BigInteger.valueOf(1);
+				c[1] = BigInteger.valueOf(2);
+				c[2] = BigInteger.valueOf(6);*/
+
+				// Set up for Chinese theorem
+				BigInteger[] N_prod = new BigInteger[3];
+				N_prod[0] = N[1].multiply(N[2]);
+				N_prod[1]= N[0].multiply(N[2]);
+				N_prod[2] = N[0].multiply(N[1]);
+				BigInteger N_total = N[0].multiply(N[1].multiply(N[2]));
+
+				BigInteger x[] = new BigInteger[3];
+
+				/*System.out.println("### INITIAL ###");
+				System.out.println("N[0] =\t"+N[0]);
+				System.out.println("N[1] =\t"+N[1]);
+				System.out.println("N[2] =\t"+N[2]);
+				System.out.println("c[0] =\t"+c[0]);
+				System.out.println("c[1] =\t"+c[1]);
+				System.out.println("c[2] =\t"+c[2]);
+				System.out.println("N0_prod =\t"+N_prod[0]);
+				System.out.println("N1_prod =\t"+N_prod[1]);
+				System.out.println("N2_prod =\t"+N_prod[2]);
+				System.out.println("N_total =\t"+N_total);
+				System.out.println("x[0] =\t"+x[0]);
+				System.out.println("x[1] =\t"+x[1]);
+				System.out.println("x[2] =\t"+x[2]);*/
+
+				// Calculate x values of Chinese theorem
+				for (int i = 0; i<3; i++) {
+					x[i] = N_prod[i].modInverse(N[i]);
+					//System.out.println("x["+i+"] =\t"+x[i]);
+				}
+
+				// Calculate C based on x, c and N_prod values
+				BigInteger C = BigInteger.ZERO;
+				BigInteger[] y = new BigInteger[3];
+				for (int i = 0; i<3; i++) {
+					y[i] = x[i].multiply(c[i].multiply(N_prod[i]));
+					C = C.add(y[i]);
+				}
+				C = C.mod(N_total);	// find small than N1*N2*N3
+				System.out.println("C = "+ C);
+
+				// cbrt to calculate m from C
+				BigInteger m = CubeRoot.cbrt(C);
+
+				return m;
+			}
+
 	}
 
   /*
