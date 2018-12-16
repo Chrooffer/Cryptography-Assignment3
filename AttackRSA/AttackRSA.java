@@ -64,40 +64,66 @@ public class AttackRSA {
 		//String d = CryptoLib.ModInv(e, eulerPhi);
 
 		BigInteger[] bid = new BigInteger[3];
+		BigInteger bi0, bi1, bi2;
+		BigInteger bir0, bir1, bir2;
 		BigInteger[] biephi = new BigInteger[3];
 
 		// Implement https://en.wikipedia.org/wiki/Coppersmith%27s_attack
+		// Pseudo code: biephi[i] = Euler.Phi(N[0]);
+		//System.out.println("ModInverse of N[i]: " + biephi[i]);
+		/* Some other good links:
+		https://www.nayuki.io/page/java-biginteger-was-made-for-rsa-cryptography
+		https://crypto.stackexchange.com/questions/2323/how-does-a-chosen-plaintext-attack-on-rsa-work
+		https://docs.oracle.com/javase/8/docs/api/java/math/BigInteger.html#modPow-java.math.BigInteger-java.math.BigInteger-
+		http://www.cse.chalmers.se/edu/course/TDA352/pdf/lect/lect05.pdf
+		http://www.cse.chalmers.se/edu/course/TDA352/pdf/lect/lect06.pdf
+		http://www.cse.chalmers.se/edu/course/TDA352/pdf/lect/lect07.pdf
+		*/
     for (int i = 0; i<3; i++){
       System.out.println("N[" + i + "]: " + N[i]);
       System.out.println("e[" + i + "]: " + e[i]);
       System.out.println("c[" + i + "]: " + c[i]);
-
- 			// Pseudo code: biephi[i] = Euler.Phi(N[0]);
-			/* Some other good links:
-			https://www.nayuki.io/page/java-biginteger-was-made-for-rsa-cryptography
-			https://crypto.stackexchange.com/questions/2323/how-does-a-chosen-plaintext-attack-on-rsa-work
-			https://docs.oracle.com/javase/8/docs/api/java/math/BigInteger.html#modPow-java.math.BigInteger-java.math.BigInteger-
-			http://www.cse.chalmers.se/edu/course/TDA352/pdf/lect/lect05.pdf
-			http://www.cse.chalmers.se/edu/course/TDA352/pdf/lect/lect06.pdf
-			http://www.cse.chalmers.se/edu/course/TDA352/pdf/lect/lect07.pdf
-
-
-			*/
-			System.out.println("ModInverse of N[i]: " + biephi[i]);
-
-			bid[i] = e[i].modInverse(biephi[i]);
-			System.out.println("d[i]: " + bid[i]);
 			System.out.println();
+		}
+		BigInteger totalN;
+		totalN = N[0].multiply(N[1]).multiply(N[2]);
+		//For C0
+		//By using chinese remainder theorem (and euclidean division) the answer to the formula for the Håstad Broadcast Attack
+		//is Ci = C mod(Ni), bio = C in this case, because C = a1 from euclidian division formula (remainder r).
+		bi0 = c[0].mod(N[0]);//This part nees to become Chinese remainder theorem (Then do the same for c1 and c2)
+		//C = M^3, therefore cuberoot of C (bir0) should therefore = M. But it is not?
+		bir0 = CubeRoot.cbrt(bi0);
+		bid[0] = bir0;// bir0.mod(totalN);
+		System.out.println("bir" + 0 + ": " + bir0);
+		System.out.println();
+
+		//For C1
+		bi1 = c[1].mod(N[1]);
+		bir1 = CubeRoot.cbrt(bi1);
+		System.out.println("bir" + 1 + ": " + bir1);
+		System.out.println();
+		bid[1] = bir1;
+
+		//For C2
+		bi2 = c[2].mod(N[2]);
+		bir2 = CubeRoot.cbrt(bi2);
+		System.out.println("bir" + 2 + ": " + bir2);
+		System.out.println();
+		bid[2] = bir2;
 
 			/*BigInteger tempo = new BigInteger("9");
 
 			bid[i] = N[0].divide(tempo);
 			System.out.println("d[i]: " + bid[i]);*/
 
-    }
 
 
-		return BigInteger.ZERO;
+		//bid[i] = e[i].modInverse(biephi[i]);
+		//System.out.println("d[i]: " + bid[i]);
+
+
+
+		return bid[0];
 	}
 
   /*
