@@ -52,79 +52,10 @@ public class AttackRSA {
 			BigInteger[] c) {
 				//Do Assignment
     /*
+		Generated for 199311300478.
     N=541943169829234727477122697102275720972053146173972333934461,e=3,c=398924993181138906590584190725292968825560162810793723052587
     N=1235559568656185372229671459847644219326103310686849347266229,e=3,c=492210655361863905807061259315457553414294037367103445414124
     N=1189363168839866028644614938349842324542055957124930112530987,e=3,c=732007191931262531495434848531299493575938917093773948145721
-    */
-		//d = e^-1 mod phi(N)
-		//BigInteger eulerPhi = CryptoLib.EulerPhi(N[0]);
-
-		//BigInteger bie = BigInteger.valueOf(myInteger.intValue());
-
-		//String d = CryptoLib.ModInv(e, eulerPhi);
-
-		/*BigInteger[] bid = new BigInteger[3];
-		BigInteger bi0, bi1, bi2;
-		BigInteger bir0, bir1, bir2;
-		BigInteger[] biephi = new BigInteger[3];
-
-		// Implement https://en.wikipedia.org/wiki/Coppersmith%27s_attack
-		// Pseudo code: biephi[i] = Euler.Phi(N[0]);
-		//System.out.println("ModInverse of N[i]: " + biephi[i]);
-		/* Some other good links:
-		https://www.nayuki.io/page/java-biginteger-was-made-for-rsa-cryptography
-		https://crypto.stackexchange.com/questions/2323/how-does-a-chosen-plaintext-attack-on-rsa-work
-		https://docs.oracle.com/javase/8/docs/api/java/math/BigInteger.html#modPow-java.math.BigInteger-java.math.BigInteger-
-		http://www.cse.chalmers.se/edu/course/TDA352/pdf/lect/lect05.pdf
-		http://www.cse.chalmers.se/edu/course/TDA352/pdf/lect/lect06.pdf
-		http://www.cse.chalmers.se/edu/course/TDA352/pdf/lect/lect07.pdf
-		*/
-    /*for (int i = 0; i<3; i++){
-      System.out.println("N[" + i + "]: " + N[i]);
-      System.out.println("e[" + i + "]: " + e[i]);
-      System.out.println("c[" + i + "]: " + c[i]);
-			System.out.println();
-		}
-		BigInteger totalN;
-		totalN = N[0].multiply(N[1]).multiply(N[2]);
-		//For C0
-		//By using chinese remainder theorem (and euclidean division) the answer to the formula for the Håstad Broadcast Attack
-		//is Ci = C mod(Ni), bio = C in this case, because C = a1 from euclidian division formula (remainder r).
-		bi0 = c[0].mod(N[0]);//This part nees to become Chinese remainder theorem (Then do the same for c1 and c2)
-		//C = M^3, therefore cuberoot of C (bir0) should therefore = M. But it is not?
-		bir0 = CubeRoot.cbrt(bi0);
-		bid[0] = bir0;// bir0.mod(totalN);
-		System.out.println("bir" + 0 + ": " + bir0);
-		System.out.println();
-
-		//For C1
-		bi1 = c[1].mod(N[1]);
-		bir1 = CubeRoot.cbrt(bi1);
-		System.out.println("bir" + 1 + ": " + bir1);
-		System.out.println();
-		bid[1] = bir1;
-
-		//For C2
-		bi2 = c[2].mod(N[2]);
-		bir2 = CubeRoot.cbrt(bi2);
-		System.out.println("bir" + 2 + ": " + bir2);
-		System.out.println();
-		bid[2] = bir2;
-
-			/*BigInteger tempo = new BigInteger("9");
-
-			bid[i] = N[0].divide(tempo);
-			System.out.println("d[i]: " + bid[i]);*/
-
-
-
-		//bid[i] = e[i].modInverse(biephi[i]);
-		//System.out.println("d[i]: " + bid[i]);
-
-
-
-		//return bid[0];
-
 
 		// find c such that c = c1 mod N1 = c2 mod N2 = c3 mod N3
 				// find largest Ni
@@ -184,42 +115,5 @@ public class AttackRSA {
 
 				return m;
 	}
-
-	
-
-  /*
-  Attacking RSA (10 points)
-  This attack applies to the case in which the same message is
-  encrypted using RSA to three different recipients.
-  The enablers of the attack are (1) all recipients have
-  the same public key (e = 3) and (2) the recipients have
-  different modulus (N1, N2, N3) that are coprime. Your goal
-  in this assignment is to use the three eavesdropped ciphertexts
-  and recover the secret message! The message you will recover
-  is an ASCII encoding of a name you should know ;)
-
-  The text field below displays the modulus (N), the public key
-  (e) and the cipher text (c) of three recipients of the same message (m).
-  Your goal is to retrieve m.
-
-  You can try starting from here, but we provide additional hints if you want some help. Give a hint
-
-  1. We know that each cipher text is computed as m3. Why does it not make sense to directly compute the cube root on one the cipher texts (c)?
-
-  2. Computing the cube root with some modulus N is equivalent to solving the discrete
-  log problem for exponent e=3, which we know to be hard.
-  What about trying to move to a bigger modulus so that no modular reduction occurs when you encrypt the message?
-
-  3. N1N2N3 is a large enough modulus, since in RSA encryption the message must be an element in ZNi.
-  That is, you can see this is as m < Ni for i=1,2,3 and therefore m3 < N1N2N3.
-
-  4. In order to find m3 the large modulus you can use the Chinese Remainder Theorem.
-
-  5. This is your last hint. https://en.wikipedia.org/wiki/Chinese_remainder_theorem
-
-  N=541943169829234727477122697102275720972053146173972333934461,e=3,c=398924993181138906590584190725292968825560162810793723052587
-  N=1235559568656185372229671459847644219326103310686849347266229,e=3,c=492210655361863905807061259315457553414294037367103445414124
-  N=1189363168839866028644614938349842324542055957124930112530987,e=3,c=732007191931262531495434848531299493575938917093773948145721
-  */
 
 }
