@@ -42,8 +42,87 @@ public class ElGamal {
   public static BigInteger recoverSecret(BigInteger p, BigInteger g,
       BigInteger y, int year, int month, int day, int hour, int minute,
       int second, BigInteger c1, BigInteger c2) {
-    return c1;
-  }
+
+      System.out.println("### INPUTS ###");
+  	  System.out.println("p:\t"+p);
+  	  System.out.println("g:\t"+g);
+  	  System.out.println("y:\t"+y);
+  	  System.out.println("year:\t"+year);
+  	  System.out.println("month:\t"+month);
+  	  System.out.println("day:\t"+day);
+  	  System.out.println("hour:\t"+hour);
+  	  System.out.println("minute:\t"+minute);
+  	  System.out.println("second:\t"+second);
+  	  System.out.println("c1:\t"+c1);
+  	  System.out.println("c2:\t"+c2);
+  	  System.out.println("### INPUTS - end ###");
+  	  System.out.println();
+
+  	  BigInteger yearToSec = createRandomNumber(year, month, day, hour, minute, second, 0);
+
+  	  // find r	--> use c1 = g^r mod p
+  	  // yearToSec = 20151225123059
+  	  // milliseconds (ms) = ??
+
+  	  // Find r using brute force (only 1000 different numbers possible --> everything except milliseconds is known)
+  	  int ms = 0;
+  	  BigInteger r = BigInteger.ZERO;
+  	  BigInteger g_r = BigInteger.ZERO;
+  	  boolean rFound = false;
+  	  while(!rFound && ms<1000) {
+  		  r = createRandomNumber(yearToSec, ms);
+  		  g_r = g.modPow(r, p);
+  		  if (g_r.equals(c1)) {
+  			  rFound = true;
+  		  }
+  		  else {
+  			  ms++;
+  		  }
+  	  }
+  	  /*
+  	  System.out.println("year to second:\t"+yearToSec);
+  	  System.out.println("millisecond:\t"+ms);
+  	  System.out.println("random number = "+r);
+  	  */
+
+  	  /*
+  	   * Now that we know the random value r, we can compute m
+  	   * m 	= c2 * y^-r  	mod p
+  	   * 	= c2 * y^(p-1-r)	mod p
+  	   * 	= (c2 mod p) * (y^(p-1-r) mod p)  mod p
+  	   */
+
+  	  // a = c2 mod p
+  	  BigInteger a = c2.mod(p);
+
+  	  // b = y^(p-1-r) mod p
+  	  BigInteger p1r = p.subtract(BigInteger.ONE.add(r));
+  	  BigInteger b = y.modPow(p1r, p);
+
+  	  // m = a*b mod p
+  	  BigInteger m;
+  	  m = (a.multiply(b)).mod(p);
+
+      return m;
+    }
+
+    public static BigInteger createRandomNumber(int year, int month, int day, int hour, int minute, int second, int millisecs) {
+  	  BigInteger random = BigInteger.ZERO;
+  	  random = random.add(BigInteger.valueOf(year*(int)Math.pow(10,6)).multiply(BigInteger.valueOf((int)Math.pow(10, 4))));
+  	  random = random.add(BigInteger.valueOf(month*(int)Math.pow(10,8)));
+  	  random = random.add(BigInteger.valueOf(day*(int)Math.pow(10,6)));
+  	  random = random.add(BigInteger.valueOf(hour*(int)Math.pow(10,4)));
+  	  random = random.add(BigInteger.valueOf(minute*(int)Math.pow(10,2)));
+  	  random = random.add(BigInteger.valueOf(second));
+  	  random = random.add(BigInteger.valueOf(millisecs));
+  	  return random;
+    }
+
+    public static BigInteger createRandomNumber(BigInteger yearToSec, int millisecs) {
+  	  BigInteger random = yearToSec.add(BigInteger.valueOf(millisecs));
+  	  return random;
+    }
+
 
 }
 
